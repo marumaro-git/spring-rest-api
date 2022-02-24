@@ -7,44 +7,43 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import sample.api.mybatis.SampleMapper;
 import sample.api.sample.error.NotFoundException;
 
-import org.springframework.context.MessageSource;
  
 @Service
 @Transactional
-public class DiaryService {
+public class SampleService {
  
-    private final ISampleDao dao;
+    private final SampleMapper mapper;
  
     @Autowired
-    public DiaryService(ISampleDao dao) {
-        this.dao = dao;
+    public SampleService(SampleMapper mapper) {
+        this.mapper = mapper;
     }
  
     public SampleResource findById(int id) {
-    	try {
-    		return dao.findById(id);
-    	} catch(IncorrectResultSizeDataAccessException e) {
+    	SampleResource result = mapper.findById(id);
+    	if(result == null) {
     		String errorMessage = "対象データが存在しません";
     		throw new NotFoundException(errorMessage);
     	}
+    	return result;
 	}
 
     public List<SampleResource> findList(SampleResource form) {
-        return dao.findList(form);
+        return mapper.findAll();
     }
 
     public int insert(SampleResource form) {
-		return dao.insert(form);
+		return mapper.insert(form);
 	}
 
     public int update(SampleResource form) {
-		return dao.update(form);
+		return mapper.update(form);
 	}
 
     public int delete(int id) {
-		return dao.delete(id);
+		return mapper.delete(id);
 	}
-    
 }

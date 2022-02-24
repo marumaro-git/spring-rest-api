@@ -4,8 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.mapper.Mapper;
-import org.apache.commons.beanutils.BeanUtils;
+//import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,21 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("api/diary")
-public class DiaryRestController {
+@RequestMapping("api/sample")
+public class SampleRestController {
 
 	
-	private final DiaryService service;
+	private final SampleService service;
 	
 	@Autowired
-	public DiaryRestController(DiaryService service) {
+	public SampleRestController(SampleService service) {
 		this.service = service;
 	}
 
+//	@GetMapping
+//	public List<SampleResource> getSamples(@RequestParam Map<String,String> allParams) throws IllegalAccessException, InvocationTargetException {
+//		SampleResource resource = new SampleResource();
+//		BeanUtils.populate(resource, allParams);
+//		return service.findList(resource);
+//	}
+	
 	@GetMapping
-	public List<SampleResource> getSamples(@RequestParam Map<String,String> allParams) throws IllegalAccessException, InvocationTargetException {
-		SampleResource resource = new SampleResource();
-		BeanUtils.populate(resource, allParams);
+	public List<SampleResource> getList(SampleResource resource) {
 		return service.findList(resource);
 	}
 	
